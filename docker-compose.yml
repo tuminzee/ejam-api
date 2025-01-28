@@ -1,0 +1,20 @@
+services:
+  humble-superhero:
+    image: humble-superhero
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    develop:
+      watch:
+        - path: ./src
+          target: /app/src
+          action: sync
+          ignore:
+            - node_modules
+        - path: ./package.json
+          target: /app/package.json
+          action: rebuild
