@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "preview:coverage": "jest --coverage --coverageProvider=v8 && npx http-server coverage/lcov-report -o -p 9000"
   },
   "dependencies": {
     "@fastify/csrf-protection": "^7.0.2",

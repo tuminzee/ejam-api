@@ -1,4 +1,6 @@
 # Use the official Node.js LTS image as the base image for building
+# 22.13.1 is the default lts it will be used if no NODE_VERSION is provided
+ARG NODE_VERSION=22.13.1  
 FROM node:${NODE_VERSION}-alpine AS builder
 
 # Create and set the working directory
@@ -24,8 +26,10 @@ WORKDIR /app
 
 # Copy only the necessary files from builder
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
+
+# Install only production dependencies
+RUN npm ci --only=production
 
 # Set NODE_ENV
 ENV NODE_ENV production

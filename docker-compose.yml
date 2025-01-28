@@ -1,11 +1,13 @@
 services:
   humble-superhero:
     image: humble-superhero
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
+      args:
+        NODE_VERSION: ${NODE_VERSION} # 22.13.1
     ports:
       - 8080:8080
     develop:
