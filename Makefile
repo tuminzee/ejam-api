@@ -1,4 +1,4 @@
-.PHONY: up down watch clean help prune logs stats
+.PHONY: up down watch clean help prune logs stats up-build
 
 # Default target when just running 'make'
 help:
@@ -11,6 +11,7 @@ help:
 	@echo "  make clean     - Remove all containers, images, and volumes"
 	@echo "  make prune     - Remove unused Docker resources"
 	@echo "  make stats     - Show container resource usage"
+	@echo "  make up-build  - Build and start the containers"
 
 # Start containers
 up:
@@ -19,6 +20,9 @@ up:
 # Start containers and watch logs
 up-watch:
 	docker-compose up
+
+up-build:
+	docker-compose up --build
 
 # Stop and remove containers
 down:
@@ -51,13 +55,3 @@ prune:
 	docker volume prune -f
 	@echo "Cleaning unused networks..."
 	docker network prune -f
-
-# Service-specific commands (customize as needed)
-up-%:
-	docker-compose up -d $*
-
-watch-%:
-	docker-compose logs -f $*
-
-restart-%:
-	docker-compose restart $*

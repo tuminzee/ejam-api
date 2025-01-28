@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as _cluster from 'cluster';
-import { cpus } from 'os';
+// import { cpus } from 'os';
 
 const cluster = _cluster as unknown as _cluster.Cluster; // typings fix
 
@@ -13,7 +13,12 @@ export class AppClusterConfig {
     if (cluster.isPrimary) {
       const isDevelopment =
         AppClusterConfig.configService.get('NODE_ENV') === 'development';
-      const numCPUs: number = isDevelopment ? 1 : cpus().length;
+      // const numCPUs: number = isDevelopment ? 1 : cpus().length;
+
+      // NOTE: Cluster mode will create child process, and individual process will have it's own in memory data. For this reason, only runinning it with 1 CPU.
+
+      const numCPUs: number = 1;
+
       this.logger.log(
         `Master server started on ${process.pid} with ${numCPUs} ${isDevelopment ? 'CPU (Development mode)' : 'CPUs'}`,
       );
