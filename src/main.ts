@@ -4,8 +4,10 @@ import { AppClusterConfig } from './app-cluster.config';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import fastifyCsrf from '@fastify/csrf-protection';
-import { Logger, VersioningType } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule } from '@nestjs/swagger';
 
 export async function bootstrap() {
   const logger = new Logger('bootstrap');
@@ -20,7 +22,21 @@ export async function bootstrap() {
     type: VersioningType.URI,
   });
 
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Superheroes API')
+    .setDescription('The superheroes API description')
+    .setVersion('1.0')
+    .addTag('superheroes')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+
+  SwaggerModule.setup('api/docs', app, document, {
+    jsonDocumentUrl: '/api/docs.json',
+  });
+
   await app.register(fastifyCsrf);
+  app.useGlobalPipes(new ValidationPipe());
   const port = config.get<number>('PORT') ?? 3000;
   await app.listen(port, '0.0.0.0');
   logger.log(`Server is running on port ${port}`);
