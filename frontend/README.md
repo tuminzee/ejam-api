@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+![alt text](imgs/image.png)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Ejam API - Humble Superhero Frontend
 
-Currently, two official plugins are available:
+### Prerequisites
+- Node.js (v22.13.1) ([fnm](https://github.com/Schniz/fnm) recommended for managing node versions)
+- Backend API running ([see backend README](../backend/README.md))
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Getting Started
+1. Install dependencies: `fnm use && npm install`
+2. Run the development server: `npm run dev`
+3. Open your browser and navigate to [http://localhost:5173](http://localhost:5173)
 
-## Expanding the ESLint configuration
+### Notes
+- The frontend is built with Vite and React.
+- Uses React Query for managing async state management.
+- Uses TailwindCSS for styling.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Given more time, things I would have done
+- Use a component library like MUI, or Ant Design
+- Add analytics e.g. Google Analytics, or PostHog
+- Write tests
+- Add more error handling
+- Use web sockets for real-time updates
+- Allow user to upload their own superheroes images
+- Add a search bar
+- Add a filter for the superheroes, depending on superpower
+- Add a filter for the superheroes, depending on humility score
+- Add a compare feature, where you can compare two superheroes
+- Add a feature where you can add a superhero to your favorites
+- Add a feature where you can add a superhero to your team
+- Add a feature where you can add a superhero to your enemies
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
