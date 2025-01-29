@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { envValidationSchema, sharedConfig } from './config/configuration';
 import { SuperheroesModule } from './superheroes/superheroes.module';
+import { SeederService } from './seeder/seeder.service';
 
 @Module({
   imports: [
@@ -14,9 +15,8 @@ import { SuperheroesModule } from './superheroes/superheroes.module';
       load: [sharedConfig],
     }),
     SuperheroesModule,
-    SuperheroesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeederService],
 })
 export class AppModule {}

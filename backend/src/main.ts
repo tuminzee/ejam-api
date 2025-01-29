@@ -8,6 +8,7 @@ import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger';
+import { SeederService } from './seeder/seeder.service';
 
 export async function bootstrap() {
   const logger = new Logger('bootstrap');
@@ -16,6 +17,7 @@ export async function bootstrap() {
     AppModule,
     new FastifyAdapter({ logger: true }),
   );
+  app.enableCors();
   app.setGlobalPrefix('api');
   app.enableVersioning({
     defaultVersion: '1',
@@ -37,7 +39,10 @@ export async function bootstrap() {
 
   await app.register(fastifyCsrf);
   app.useGlobalPipes(new ValidationPipe());
+
   const port = config.get<number>('PORT') ?? 3000;
+  const seederService = app.get(SeederService);
+  seederService.seed();
   await app.listen(port, '0.0.0.0');
   logger.log(`Server is running on port ${port}`);
   logger.log(

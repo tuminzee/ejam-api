@@ -5,6 +5,7 @@ export const envValidationSchema = Joi.object({
     .valid('development', 'staging', 'production', 'test')
     .default('development'),
   PORT: Joi.number().default(8080),
+  CAN_SEED_SUPERHEROES: Joi.boolean().default(false),
 });
 
 export const sharedConfig = () => ({
